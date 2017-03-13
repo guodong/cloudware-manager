@@ -3,7 +3,7 @@ const Cmd = require('node-cmd');
 const Net = require('net');
 const Dgram = require('dgram');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 8081 });
 
 /** websocket clients from browser **/
 var clients = [];
