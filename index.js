@@ -21,10 +21,13 @@ function Client(ws) {
     switch (msg.request) {
       case 'run':
         me.runCloudware(msg.payload);
-        ws.send(JSON.stringify({
-          seq: msg.seq,
-          payload: {}
-        }));
+        setTimeout(function() {
+          ws.send(JSON.stringify({
+            seq: msg.seq,
+            payload: {}
+          }));
+        }, 5000);
+
         break;
     }
   });
