@@ -1,7 +1,6 @@
 const WebSocket = require('ws');
 const Cmd = require('node-cmd');
-const Net = require('net');
-const Dgram = require('dgram');
+
 
 const wss = new WebSocket.Server({ port: 8081 });
 
@@ -22,6 +21,10 @@ function Client(ws) {
     switch (msg.request) {
       case 'run':
         me.runCloudware(msg.payload);
+        ws.send(JSON.stringify({
+          seq: msg.seq,
+          payload: {}
+        }));
         break;
     }
   });
