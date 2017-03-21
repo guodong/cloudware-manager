@@ -39,9 +39,9 @@ function Client(ws) {
 Client.prototype = {
   runCloudware: function(name, callback) { // TODO: use name to run cloudware
     var me = this;
-    var token = me.randomIntFromInterval(100000, 999999);
-    var port = me.randomIntFromInterval(10000, 30000);
-    var display = me.randomIntFromInterval(10, 10000);
+    var token = randomIntBetween(100000, 999999);
+    var port = randomIntBetween(10000, 30000);
+    var display = randomIntBetween(10, 10000);
     var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://192.168.1.101:8088/' + token + '" cloudwarehouse/demo';
     Cmd.get(cmd, function(output) {
       console.log(output);
@@ -62,6 +62,10 @@ Client.prototype = {
     })
   }
 };
+
+function randomIntBetween(min, max) {
+  return Math.floor(Math.random()*(max-min+1)+min);
+}
 
 function findClientByWs(ws, callback) {
   var client = null;
