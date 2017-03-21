@@ -42,7 +42,7 @@ Client.prototype = {
     var token = randomIntBetween(100000, 999999);
     var port = randomIntBetween(10000, 30000);
     var display = randomIntBetween(10, 10000);
-    var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://192.168.1.101:8088/' + token + '" cloudwarehouse/demo';
+    var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://signal-service.cloudwarehub.com:8088/' + token + '" cloudwarehouse/demo';
     Cmd.get(cmd, function(output) {
       console.log(output);
       me.cloudwares.push(output);
