@@ -20,14 +20,14 @@ function Client(ws) {
     }
     switch (msg.request) {
       case 'run':
-        me.runCloudware(msg.payload);
-        setTimeout(function() {
-          ws.send(JSON.stringify({
-            seq: msg.seq,
-            payload: {}
-          }));
-        }, 5000);
-
+        me.runCloudware(msg.payload, function(token) {
+          setTimeout(function() {
+            ws.send(JSON.stringify({
+              seq: msg.seq,
+              payload: token
+            }));
+          }, 5000);
+        });
         break;
     }
   });
@@ -37,12 +37,19 @@ function Client(ws) {
 }
 
 Client.prototype = {
-  runCloudware: function(cmd) {
+  runCloudware: function(name, callback) { // TODO: use name to run cloudware
     var me = this;
+    var token = me.randomIntFromInterval(100000, 999999);
+    var port = me.randomIntFromInterval(10000, 30000);
+    var display = me.randomIntFromInterval(10, 10000);
+    var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://192.168.1.101:8088/' + token + '" cloudwarehouse/demo';
     Cmd.get(cmd, function(output) {
       console.log(output);
       me.cloudwares.push(output);
     });
+    if (callback) {
+      callback(token);
+    }
   },
   clean: function() {
     var me = this;
