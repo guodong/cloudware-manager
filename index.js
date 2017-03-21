@@ -1,8 +1,9 @@
 const WebSocket = require('ws');
 const Cmd = require('node-cmd');
+const Request = require('request');
 
 
-const wss = new WebSocket.Server({ port: 8081 });
+const wss = new WebSocket.Server({port: 8081});
 
 /** websocket clients from browser **/
 var clients = [];
@@ -42,10 +43,51 @@ Client.prototype = {
     var token = randomIntBetween(100000, 999999);
     var port = randomIntBetween(10000, 30000);
     var display = randomIntBetween(10, 10000);
-    var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://signal-service.cloudwarehub.com:8088/' + token + '" cloudwarehouse/demo';
+    /*var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://signal-service.cloudwarehub.com:8088/' + token + '" cloudwarehouse/demo';
     Cmd.get(cmd, function(output) {
       console.log(output);
       me.cloudwares.push(output);
+    });*/
+    var body = {
+      "expose": [],
+      "imageUuid": "docker:hello-world",
+      "instanceTriggeredStop": "stop",
+      "networkIds": [],
+      "ports": [],
+      "requestedHostId": "1h2",
+      "startOnCreate": true,
+      "command": [],
+      "publishAllPorts": false,
+      "privileged": false,
+      "capAdd": [],
+      "capDrop": [],
+      "dns": [],
+      "dnsSearch": [],
+      "stdinOpen": false,
+      "tty": false,
+      "entryPoint": [],
+      "restartPolicy": null,
+      "devices": [],
+      "healthCheck": null,
+      "securityOpt": [],
+      "logConfig": null,
+      "extraHosts": [],
+      "readOnly": false,
+      "build": null,
+      "dnsOpt": [],
+      "groupAdd": [],
+      "ulimits": [],
+      "netAlias": [],
+      "healthCmd": [],
+      "secrets": [],
+      "networkMode": "managed",
+      "dataVolumes": [],
+      "dataVolumesFrom": []
+    };
+    Request.post({
+      url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers',
+      method: 'POST',
+      json: body
     });
     if (callback) {
       callback(token);
@@ -64,7 +106,7 @@ Client.prototype = {
 };
 
 function randomIntBetween(min, max) {
-  return Math.floor(Math.random()*(max-min+1)+min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function findClientByWs(ws, callback) {
