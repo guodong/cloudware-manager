@@ -59,11 +59,11 @@ Client.prototype = {
       "instanceTriggeredStop": "stop",
       "networkIds": [],
       "ports": [],
-      "requestedHostId": "1h2",
+      "requestedHostId": "1h3",
       "startOnCreate": true,
       "command": [],
       "publishAllPorts": false,
-      "privileged": false,
+      "privileged": true,
       "capAdd": [],
       "capDrop": [],
       "dns": [],
@@ -85,7 +85,7 @@ Client.prototype = {
       "netAlias": [],
       "healthCmd": [],
       "secrets": [],
-      "networkMode": "managed",
+      "networkMode": "host",
       "dataVolumes": [],
       "dataVolumesFrom": []
     };
