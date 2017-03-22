@@ -59,7 +59,7 @@ Client.prototype = {
       "instanceTriggeredStop": "stop",
       "networkIds": [],
       "ports": [],
-      "requestedHostId": "1h2",
+      "requestedHostId": "1h3",
       "startOnCreate": true,
       "command": [],
       "publishAllPorts": false,
