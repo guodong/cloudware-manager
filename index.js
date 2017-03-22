@@ -58,6 +58,7 @@ Client.prototype = {
       "imageUuid": "docker:daocloud.io/guodong/pulsar:latest",
       "instanceTriggeredStop": "stop",
       "networkIds": [],
+      "privileged": true,
       "ports": [],
       "requestedHostId": "1h2",
       "startOnCreate": true,
