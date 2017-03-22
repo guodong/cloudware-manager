@@ -48,9 +48,14 @@ Client.prototype = {
       console.log(output);
       me.cloudwares.push(output);
     });*/
+
     var body = {
+      "environment": {
+        DISPLAY: display,
+        SIGNAL_ADDR: 'ws://signal-service.cloudwarehub.com:8088/' + token
+      },
       "expose": [],
-      "imageUuid": "docker:hello-world",
+      "imageUuid": "docker:daocloud.io/guodong/pulsar:latest",
       "instanceTriggeredStop": "stop",
       "networkIds": [],
       "ports": [],
@@ -80,7 +85,7 @@ Client.prototype = {
       "netAlias": [],
       "healthCmd": [],
       "secrets": [],
-      "networkMode": "managed",
+      "networkMode": "host",
       "dataVolumes": [],
       "dataVolumesFrom": []
     };
