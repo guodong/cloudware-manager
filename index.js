@@ -69,7 +69,7 @@ Client.prototype = {
       "capDrop": [],
       "dns": [],
       "dnsSearch": [],
-      "stdinOpen": false,
+      "stdinOpen": true,
       "tty": true,
       "entryPoint": [],
       "restartPolicy": null,
