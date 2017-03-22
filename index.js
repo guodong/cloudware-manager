@@ -51,7 +51,7 @@ Client.prototype = {
 
     var body = {
       "environment": {
-        DISPLAY: display,
+        DISPLAY: ':' + display,
         SIGNAL_ADDR: 'ws://signal-service.cloudwarehub.com:8088/' + token
       },
       "expose": [],
