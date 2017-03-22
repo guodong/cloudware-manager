@@ -63,7 +63,7 @@ Client.prototype = {
       "requestedHostId": "1h4",
       "startOnCreate": true,
       "command": [],
-      "publishAllPorts": false,
+      "publishAllPorts": true,
       "privileged": true,
       "capAdd": [],
       "capDrop": [],
