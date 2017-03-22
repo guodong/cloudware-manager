@@ -52,7 +52,8 @@ Client.prototype = {
     var body = {
       "environment": {
         DISPLAY: ':' + display,
-        SIGNAL_ADDR: 'ws://signal-service.cloudwarehub.com:8088/' + token
+        SIGNAL_ADDR: 'ws://signal-service.cloudwarehub.com:8088/' + token,
+        APP: 'gedit'
       },
       "expose": [],
       "imageUuid": "docker:daocloud.io/guodong/pulsar:latest",
