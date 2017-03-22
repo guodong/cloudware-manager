@@ -69,7 +69,7 @@ Client.prototype = {
       "dns": [],
       "dnsSearch": [],
       "stdinOpen": false,
-      "tty": false,
+      "tty": true,
       "entryPoint": [],
       "restartPolicy": null,
       "devices": [],
