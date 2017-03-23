@@ -23,10 +23,10 @@ function Client(ws) {
       case 'run':
         me.runCloudware(msg.payload, function(token) {
           //setTimeout(function() {
-            ws.send(JSON.stringify({
-              seq: msg.seq,
-              payload: token
-            }));
+          ws.send(JSON.stringify({
+            seq: msg.seq,
+            payload: token
+          }));
           //}, 5000);
         });
         break;
@@ -44,12 +44,12 @@ Client.prototype = {
     var port = randomIntBetween(10000, 30000);
     var display = randomIntBetween(10, 10000);
     /*var cmd = 'sudo docker run -ti -d --net host --privileged -e DISPLAY=:' + display + ' -e PORT=' + port + ' -e APP=gedit -e SIGNAL_ADDR="ws://signal-service.cloudwarehub.com:8088/' + token + '" cloudwarehouse/demo';
-    Cmd.get(cmd, function(output) {
-      console.log(output);
-      me.cloudwares.push(output);
-    });*/
+     Cmd.get(cmd, function(output) {
+     console.log(output);
+     me.cloudwares.push(output);
+     });*/
 
-    var body = {
+    var data = {
       "environment": {
         DISPLAY: ':' + display,
         SIGNAL_ADDR: 'ws://signal-service.cloudwarehub.com:8088/' + token,
@@ -93,7 +93,9 @@ Client.prototype = {
     Request.post({
       url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers',
       method: 'POST',
-      json: body
+      json: data
+    }, function(err, httpResponse, body) {
+      me.cloudwares.push(body.id);
     });
     if (callback) {
       callback(token);
@@ -103,7 +105,7 @@ Client.prototype = {
     var me = this;
     var cloudwares = me.cloudwares;
     for (var i in cloudwares) {
-      Cmd.run('sudo docker rm -f ' + cloudwares[i]);
+      Request.delete('http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/' + cloudwares[i]);
     }
     findClientByWs(me.ws, function(cli, idx) {
       clients.splice(idx, 1);
