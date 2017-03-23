@@ -49,6 +49,18 @@ Client.prototype = {
      me.cloudwares.push(output);
      });*/
 
+    var image = 'daocloud.io/guodong/pulsar:latest';
+    switch (name) {
+      case 'gedit':
+        image = 'daocloud.io/guodong/pulsar:latest';
+        break;
+      case 'matlab':
+        image = 'daocloud.io/guodong/matlab-pulsar:latest';
+        break;
+      default:
+        break;
+    }
+
     var data = {
       "environment": {
         DISPLAY: ':' + display,
@@ -56,7 +68,7 @@ Client.prototype = {
         APP: name
       },
       "expose": [],
-      "imageUuid": "docker:daocloud.io/guodong/pulsar:latest",
+      "imageUuid": "docker:" + image,
       "instanceTriggeredStop": "stop",
       "networkIds": [],
       "ports": [],
