@@ -22,12 +22,12 @@ function Client(ws) {
     switch (msg.request) {
       case 'run':
         me.runCloudware(msg.payload, function(token) {
-          setTimeout(function() {
+          //setTimeout(function() {
             ws.send(JSON.stringify({
               seq: msg.seq,
               payload: token
             }));
-          }, 5000);
+          //}, 5000);
         });
         break;
     }
