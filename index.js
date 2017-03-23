@@ -74,7 +74,7 @@ Client.prototype = {
       "ports": [],
       "requestedHostId": "1h4",
       "startOnCreate": true,
-      "command": [],
+      "command": ["/root/start.sh"],
       "publishAllPorts": true,
       "privileged": true,
       "capAdd": [],
