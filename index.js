@@ -58,7 +58,7 @@ Client.prototype = {
         image = 'daocloud.io/guodong/matlab-pulsar:latest';
         break;
       case 'supertuxkart':
-        image = 'cloudwarelabs/supertuxkart:latest';
+        image = 'daocloud.io/guodong/supertuxkart:latest';
         break;
       default:
         break;
