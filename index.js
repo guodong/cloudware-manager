@@ -57,7 +57,7 @@ Client.prototype = {
       "environment": {
         DISPLAY: ':' + display,
         SIGNAL_ADDR: 'ws://signal-service.cloudwarehub.com:8088/' + token,
-        APP: name
+        APP: 'gedit'
       },
       "expose": [],
       "imageUuid": "docker:" + image,
