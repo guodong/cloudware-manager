@@ -60,6 +60,8 @@ Client.prototype = {
       case 'supertuxkart':
         image = 'daocloud.io/guodong/supertuxkart:latest';
         break;
+      case 'thunar':
+        image = 'daocloud.io/guodong/thunar:latest';
       default:
         break;
     }
