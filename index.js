@@ -50,21 +50,8 @@ Client.prototype = {
      });*/
 
     var image = 'daocloud.io/guodong/pulsar:latest';
-    switch (name) {
-      case 'gedit':
-        image = 'daocloud.io/guodong/pulsar:latest';
-        break;
-      case 'matlab':
-        image = 'daocloud.io/guodong/matlab-pulsar:latest';
-        break;
-      case 'supertuxkart':
-        image = 'daocloud.io/guodong/supertuxkart:latest';
-        break;
-      case 'thunar':
-        image = 'daocloud.io/guodong/thunar:latest';
-      default:
-        break;
-    }
+    if (name)
+      image = name;
 
     var data = {
       "environment": {
