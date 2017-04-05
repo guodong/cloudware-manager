@@ -30,6 +30,13 @@ function Client(ws) {
           //}, 5000);
         });
         break;
+      case 'runDesktop':
+        me.runDesktop(function(port) {
+          ws.send(JSON.stringify({
+            seq: msg.seq,
+            payload: port
+          }));
+        });
     }
   });
   ws.on('close', function() {
@@ -104,6 +111,107 @@ Client.prototype = {
     if (callback) {
       callback(token);
     }
+  },
+  runDesktop: function(callback) {
+    var me = this;
+    var data = {
+      instanceTriggeredStop: "stop",
+      startOnCreate: true,
+      publishAllPorts: false,
+      privileged: false,
+      stdinOpen: true,
+      tty: true,
+      readOnly: false,
+      networkMode: "bridge",
+      type: "container",
+      requestedHostId: "1h4",
+      secrets: [],
+      dataVolumes: [],
+      dataVolumesFrom: [],
+      dns: [],
+      dnsSearch: [],
+      capAdd: [],
+      capDrop: [],
+      devices: [],
+      logConfig: {"driver": "", "config": {}},
+      dataVolumesFromLaunchConfigs: [],
+      imageUuid: "docker:daocloud.io/guodong/pulsar-desktop1:latest",
+      ports: ["5678/tcp"],
+      instanceLinks: {},
+      labels: {},
+      networkContainerId: null,
+      count: null,
+      createIndex: null,
+      created: null,
+      deploymentUnitUuid: null,
+      description: null,
+      externalId: null,
+      firstRunning: null,
+      healthState: null,
+      hostname: null,
+      kind: null,
+      memoryReservation: null,
+      milliCpuReservation: null,
+      removed: null,
+      startCount: null,
+      uuid: null,
+      volumeDriver: null,
+      workingDir: null,
+      user: null,
+      domainName: null,
+      memorySwap: null,
+      memory: null,
+      cpuSet: null,
+      cpuShares: null,
+      pidMode: null,
+      blkioWeight: null,
+      cgroupParent: null,
+      usernsMode: null,
+      pidsLimit: null,
+      diskQuota: null,
+      cpuCount: null,
+      cpuPercent: null,
+      ioMaximumIOps: null,
+      ioMaximumBandwidth: null,
+      cpuPeriod: null,
+      cpuQuota: null,
+      cpuSetMems: null,
+      isolation: null,
+      kernelMemory: null,
+      memorySwappiness: null,
+      shmSize: null,
+      uts: null,
+      ipcMode: null,
+      stopSignal: null,
+      oomScoreAdj: null,
+      ip: null,
+      ip6: null,
+      healthInterval: null,
+      healthTimeout: null,
+      healthRetries: null
+    };
+    Request.post({
+      url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/container',
+      method: 'POST',
+      json: data
+    }, function(err, httpResponse, body) {
+      console.log(body);
+      console.log('create container: '+body.id);
+      setTimeout(function() {
+        Request.get({
+          url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/'+body.id+'/ports',
+        }, function(err, hr, body) {
+          console.log(body);
+          var d = JSON.parse(body);
+          var port = d.data[0].publicPort;
+          if (callback) {
+            callback(port);
+          }
+        });
+      }, 2000);
+
+      me.cloudwares.push(body.id);
+    });
   },
   clean: function() {
     var me = this;
