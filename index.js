@@ -197,6 +197,21 @@ Client.prototype = {
     }, function(err, httpResponse, body) {
       console.log(body);
       console.log('create container: '+body.id);
+      /*function getPort(cb) {
+        Request.get({
+          url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/'+body.id+'/ports',
+        }, function(err, hr, body) {
+          console.log(body);
+          var d = JSON.parse(body);
+          var port = d.data[0].publicPort;
+          if (!port) {
+            getPort(callback);
+          }
+          if (cb) {
+            cb(port);
+          }
+        });
+      }*/
       setTimeout(function() {
         Request.get({
           url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/'+body.id+'/ports',
@@ -204,11 +219,14 @@ Client.prototype = {
           console.log(body);
           var d = JSON.parse(body);
           var port = d.data[0].publicPort;
+          if (!port) {
+
+          }
           if (callback) {
             callback(port);
           }
         });
-      }, 2000);
+      }, 4000);
 
       me.cloudwares.push(body.id);
     });
