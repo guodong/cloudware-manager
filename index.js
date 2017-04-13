@@ -2,6 +2,8 @@ const WebSocket = require('ws');
 const Cmd = require('node-cmd');
 const Request = require('request');
 
+const RANCHER_USER = 'CBCA67D9254C7C52D0C0';
+const RANCHER_PASS = 'R45874piapVw45Sgyp7XogBJu7RLgm3HyEHEed2k';
 
 const wss = new WebSocket.Server({port: 8081});
 
@@ -104,6 +106,10 @@ Client.prototype = {
     Request.post({
       url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers',
       method: 'POST',
+      auth: {
+        user: RANCHER_USER,
+        pass: RANCHER_PASS
+      },
       json: data
     }, function(err, httpResponse, body) {
       me.cloudwares.push(body.id);
@@ -135,7 +141,7 @@ Client.prototype = {
       devices: [],
       logConfig: {"driver": "", "config": {}},
       dataVolumesFromLaunchConfigs: [],
-      imageUuid: "docker:daocloud.io/guodong/pulsar-desktop1:latest",
+      imageUuid: "docker:daocloud.io/guodong/pulsar-desktop:latest",
       ports: ["5678/tcp"],
       instanceLinks: {},
       labels: {},
@@ -193,6 +199,10 @@ Client.prototype = {
     Request.post({
       url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/container',
       method: 'POST',
+      auth: {
+        user: RANCHER_USER,
+        pass: RANCHER_PASS
+      },
       json: data
     }, function(err, httpResponse, body) {
       console.log(body);
@@ -215,6 +225,10 @@ Client.prototype = {
       setTimeout(function() {
         Request.get({
           url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/'+body.id+'/ports',
+          auth: {
+            user: RANCHER_USER,
+            pass: RANCHER_PASS
+          },
         }, function(err, hr, body) {
           console.log(body);
           var d = JSON.parse(body);
@@ -235,7 +249,13 @@ Client.prototype = {
     var me = this;
     var cloudwares = me.cloudwares;
     for (var i in cloudwares) {
-      Request.delete('http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/' + cloudwares[i]);
+      Request.delete({
+        url: 'http://rancher.cloudwarehub.com:8080/v2-beta/projects/1a5/containers/' + cloudwares[i],
+        auth: {
+          user: RANCHER_USER,
+          pass: RANCHER_PASS
+        },
+      });
     }
     findClientByWs(me.ws, function(cli, idx) {
       clients.splice(idx, 1);
