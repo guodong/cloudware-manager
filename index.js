@@ -99,7 +99,7 @@ Client.prototype = {
       "netAlias": [],
       "healthCmd": [],
       "secrets": [],
-      "networkMode": "managed",
+      "networkMode": "host",
       "dataVolumes": [],
       "dataVolumesFrom": []
     };
